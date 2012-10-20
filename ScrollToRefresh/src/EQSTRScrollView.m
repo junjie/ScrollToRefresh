@@ -88,6 +88,7 @@
 #pragma mark - Create Header View
 
 - (void)viewDidMoveToWindow {
+	_enablesPullToRefresh = YES;
 	[self createHeaderView];
 }
 
@@ -200,7 +201,10 @@
 
 - (void)scrollWheel:(NSEvent *)event {
 	if (event.phase == NSEventPhaseEnded) {
-		if (self._overRefreshView && !self.isRefreshing) {
+		if (self.enablesPullToRefresh &&
+			self._overRefreshView &&
+			!self.isRefreshing)
+		{
 			[self startLoading];
 		}
 	}
@@ -267,13 +271,7 @@
 	}
 }
 
-- (void)stopLoading {
-	if (!self.enablesPullToRefresh)
-	{
-		NSAssert(0, @"Attempt to stopLoading when enablesPullToRefresh == NO");
-		return;
-	}
-	
+- (void)stopLoading {	
 	self.refreshArrow.hidden            = NO;	
 	
 	[self.refreshArrow layer].transform = CATransform3DMakeRotation(M_PI * 2, 0, 0, 1);
