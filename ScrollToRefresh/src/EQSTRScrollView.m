@@ -63,6 +63,28 @@
 	[super dealloc];
 }
 
+#pragma mark - Enable/disable the pull to refresh
+
+- (void)setEnablesPullToRefresh:(BOOL)enablesPullToRefresh
+{
+	if (_enablesPullToRefresh != enablesPullToRefresh)
+	{
+		_enablesPullToRefresh = enablesPullToRefresh;
+		
+		if (_enablesPullToRefresh)
+		{
+			[self.refreshHeader setHidden:NO];
+		}
+		
+		else
+		{
+			// Stop any loading that's taking place
+			[self stopLoading];
+			[self.refreshHeader setHidden:YES];
+		}
+	}
+}
+
 #pragma mark - Create Header View
 
 - (void)viewDidMoveToWindow {
@@ -79,7 +101,9 @@
 		EQSTRClipView *clipView  = [[EQSTRClipView alloc] initWithFrame:superClipView.frame];
 		clipView.documentView    = documentView;
 		clipView.copiesOnScroll  = NO;
-		clipView.drawsBackground = NO;
+		
+		// This prevents any backgroundColor set to scrollView from being applied
+//		clipView.drawsBackground = NO;
 		
 		[self setContentView:clipView];
 		[clipView release];
@@ -176,7 +200,7 @@
 
 - (void)scrollWheel:(NSEvent *)event {
 	if (event.phase == NSEventPhaseEnded) {
-		if (self._overRefreshView && ! self.isRefreshing) {
+		if (self._overRefreshView && !self.isRefreshing) {
 			[self startLoading];
 		}
 	}
@@ -186,6 +210,9 @@
 
 - (void)viewBoundsChanged:(NSNotification *)note {
 	if (self.isRefreshing)
+		return;
+	
+	if (!self.enablesPullToRefresh)
 		return;
 	
 	BOOL start = [self overRefreshView];
@@ -222,6 +249,12 @@
 #pragma mark - Refresh
 
 - (void)startLoading {
+	if (!self.enablesPullToRefresh)
+	{
+		NSAssert(0, @"Attempt to startLoading when enablesPullToRefresh == NO");
+		return;
+	}
+	
 	[self willChangeValueForKey:@"isRefreshing"];
 	_isRefreshing            = YES;
 	[self didChangeValueForKey:@"isRefreshing"];
@@ -234,7 +267,13 @@
 	}
 }
 
-- (void)stopLoading {	
+- (void)stopLoading {
+	if (!self.enablesPullToRefresh)
+	{
+		NSAssert(0, @"Attempt to stopLoading when enablesPullToRefresh == NO");
+		return;
+	}
+	
 	self.refreshArrow.hidden            = NO;	
 	
 	[self.refreshArrow layer].transform = CATransform3DMakeRotation(M_PI * 2, 0, 0, 1);

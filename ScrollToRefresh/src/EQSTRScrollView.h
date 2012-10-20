@@ -25,8 +25,11 @@
 #import <AppKit/AppKit.h>
 
 @interface EQSTRScrollView : NSScrollView
-@property (readonly) BOOL isRefreshing;
 
+// Default: YES
+@property (nonatomic) BOOL enablesPullToRefresh;
+
+@property (readonly) BOOL isRefreshing;
 @property (readonly) NSView *refreshHeader;
 @property (readonly) NSProgressIndicator *refreshSpinner;
 @property (readonly) NSView *refreshArrow;
