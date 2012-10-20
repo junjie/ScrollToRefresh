@@ -172,11 +172,14 @@
 	self.refreshSpinner.bezeled               = NO;
 	[self.refreshSpinner sizeToFit];
 	
+	NSRect spinnerFrame = self.refreshSpinner.frame;
+	spinnerFrame.size.width = 20;
+	spinnerFrame.size.height = 20;
+	spinnerFrame.origin.x = floor(NSMidX(self.refreshHeader.bounds) - spinnerFrame.size.width / 2);
+	spinnerFrame.origin.y = floor(NSMidY(self.refreshHeader.bounds) - spinnerFrame.size.height / 2);
+	
 	// Center the spinner in the header
-	[self.refreshSpinner setFrame:NSMakeRect(floor(NSMidX(self.refreshHeader.bounds) - self.refreshSpinner.frame.size.width / 2),
-											 floor(NSMidY(self.refreshHeader.bounds) - self.refreshSpinner.frame.size.height / 2), 
-											 self.refreshSpinner.frame.size.width, 
-											 self.refreshSpinner.frame.size.height)];
+	[self.refreshSpinner setFrame:spinnerFrame];
 	
 	// set autoresizing masks
 	self.refreshSpinner.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin; // center
