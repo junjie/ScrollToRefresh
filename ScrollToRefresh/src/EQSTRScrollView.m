@@ -145,7 +145,7 @@
 															  REFRESH_HEADER_HEIGHT)];
 	
 	// Create Arrow
-	NSImage *arrowImage = [NSImage imageNamed:@"arrow"];
+	NSImage *arrowImage = [NSImage imageNamed:@"PullToRefreshArrow"];
 	_refreshArrow       = [[NSView alloc] initWithFrame:NSMakeRect(floor(NSMidX(self.refreshHeader.bounds) - arrowImage.size.width / 2), 
 																   floor(NSMidY(self.refreshHeader.bounds) - arrowImage.size.height / 2), 
 																   arrowImage.size.width,

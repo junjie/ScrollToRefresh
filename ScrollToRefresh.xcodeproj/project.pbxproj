@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B32569401633E05800A6E0FC /* PullToRefreshArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B325693E1633E05800A6E0FC /* PullToRefreshArrow.png */; };
+		B32569411633E05800A6E0FC /* PullToRefreshArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B325693F1633E05800A6E0FC /* PullToRefreshArrow@2x.png */; };
 		FA121D601472FB2B00FED3BA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA121D5F1472FB2B00FED3BA /* Cocoa.framework */; };
 		FA121D6A1472FB2B00FED3BA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA121D681472FB2B00FED3BA /* InfoPlist.strings */; };
 		FA121D6C1472FB2B00FED3BA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA121D6B1472FB2B00FED3BA /* main.m */; };
@@ -16,11 +18,12 @@
 		FA121D7E1472FB5800FED3BA /* EQSTRScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA121D7D1472FB5800FED3BA /* EQSTRScrollView.m */; };
 		FA121D851472FB9300FED3BA /* EQSTRClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA121D841472FB9300FED3BA /* EQSTRClipView.m */; };
 		FA121D87147303B400FED3BA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA121D86147303B400FED3BA /* QuartzCore.framework */; };
-		FA121D89147303EC00FED3BA /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FA121D88147303EC00FED3BA /* arrow.png */; };
 		FA121D97147318BD00FED3BA /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = FA121D96147318BD00FED3BA /* README.markdown */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B325693E1633E05800A6E0FC /* PullToRefreshArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PullToRefreshArrow.png; sourceTree = "<group>"; };
+		B325693F1633E05800A6E0FC /* PullToRefreshArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PullToRefreshArrow@2x.png"; sourceTree = "<group>"; };
 		FA121D5B1472FB2B00FED3BA /* ScrollToRefresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollToRefresh.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA121D5F1472FB2B00FED3BA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FA121D621472FB2B00FED3BA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -39,7 +42,6 @@
 		FA121D831472FB9300FED3BA /* EQSTRClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EQSTRClipView.h; path = src/EQSTRClipView.h; sourceTree = "<group>"; };
 		FA121D841472FB9300FED3BA /* EQSTRClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EQSTRClipView.m; path = src/EQSTRClipView.m; sourceTree = "<group>"; };
 		FA121D86147303B400FED3BA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		FA121D88147303EC00FED3BA /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
 		FA121D96147318BD00FED3BA /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -108,7 +110,8 @@
 		FA121D661472FB2B00FED3BA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FA121D88147303EC00FED3BA /* arrow.png */,
+				B325693E1633E05800A6E0FC /* PullToRefreshArrow.png */,
+				B325693F1633E05800A6E0FC /* PullToRefreshArrow@2x.png */,
 				FA121D671472FB2B00FED3BA /* ScrollToRefresh-Info.plist */,
 				FA121D681472FB2B00FED3BA /* InfoPlist.strings */,
 				FA121D6B1472FB2B00FED3BA /* main.m */,
@@ -184,8 +187,9 @@
 				FA121D6A1472FB2B00FED3BA /* InfoPlist.strings in Resources */,
 				FA121D701472FB2B00FED3BA /* Credits.rtf in Resources */,
 				FA121D761472FB2B00FED3BA /* MainMenu.xib in Resources */,
-				FA121D89147303EC00FED3BA /* arrow.png in Resources */,
 				FA121D97147318BD00FED3BA /* README.markdown in Resources */,
+				B32569401633E05800A6E0FC /* PullToRefreshArrow.png in Resources */,
+				B32569411633E05800A6E0FC /* PullToRefreshArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
