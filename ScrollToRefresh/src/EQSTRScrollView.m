@@ -101,7 +101,9 @@
 		
 		EQSTRClipView *clipView  = [[EQSTRClipView alloc] initWithFrame:superClipView.frame];
 		clipView.documentView    = documentView;
-		clipView.copiesOnScroll  = NO;
+		
+		// This prevents the shadow from drawing properly
+//		clipView.copiesOnScroll  = NO;
 		
 		// This prevents any backgroundColor set to scrollView from being applied
 //		clipView.drawsBackground = NO;
