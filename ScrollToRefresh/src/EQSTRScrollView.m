@@ -287,16 +287,21 @@
 	[self willChangeValueForKey:@"isRefreshing"];
 	_isRefreshing = NO;
 	[self didChangeValueForKey:@"isRefreshing"];
-	
-	CGEventRef cgEvent   = CGEventCreateScrollWheelEvent(NULL,
-														 kCGScrollEventUnitLine,
-														 2,
-														 1,
-														 0);
-	
-	NSEvent *scrollEvent = [NSEvent eventWithCGEvent:cgEvent];
-	[self scrollWheel:scrollEvent];
-	CFRelease(cgEvent);
+		
+	if (self.documentVisibleRect.origin.y < 0)
+	{
+		CGEventRef cgEvent =
+		CGEventCreateScrollWheelEvent(NULL,
+									  kCGScrollEventUnitLine,
+									  2,
+									  1,
+									  0);
+		
+		NSEvent *scrollEvent = [NSEvent eventWithCGEvent:cgEvent];
+		[self scrollWheel:scrollEvent];
+		CFRelease(cgEvent);
+		
+	}
 }
 
 @end
