@@ -113,6 +113,8 @@
 		
 		superClipView            = [super contentView];
 		
+		superClipView.wantsLayer = YES;
+		
 	}
 	return superClipView;
 }
@@ -217,7 +219,34 @@
 	[super scrollWheel:event];
 }
 
-- (void)viewBoundsChanged:(NSNotification *)note {
+- (void)viewBoundsChanged:(NSNotification *)note
+{
+	NSRect bounds = self.contentView.bounds;
+	
+	if (bounds.origin.y >= 0)
+	{
+		return;
+	}
+	
+	CGRect layerBounds = self.contentView.layer.bounds;
+
+	CGFloat refreshHeaderHeight = self.refreshHeader.frame.size.height;
+	
+	CGFloat additionalPull =
+	exp(-(fabs(bounds.origin.y) / 10 - log(refreshHeaderHeight * 0.75))) -
+	refreshHeaderHeight * 0.75;
+	
+	additionalPull = round(additionalPull);
+	
+	layerBounds.origin.y = bounds.origin.y + additionalPull;
+	
+//	DDLogInfo(@"View Bounds: %@ / Layer Bounds: %@ / Additional Pull: %.2f",
+//			  NSStringFromRect(bounds),
+//			  NSStringFromRect(layerBounds),
+//			  additionalPull);
+	
+	self.contentView.layer.bounds = layerBounds;
+	
 	if (self.isRefreshing)
 		return;
 	
@@ -245,8 +274,10 @@
 	NSClipView *clipView  = self.contentView;
 	NSRect bounds         = clipView.bounds;
 	
-	CGFloat scrollValue   = bounds.origin.y;
+	CGFloat scrollValue   = bounds.origin.y + (clipView.layer.bounds.origin.y + fabs(bounds.origin.y));
 	CGFloat minimumScroll = self.minimumScroll;
+	
+//	DDLogInfo(@"scrollValue %.2f <= minimumScroll %.2f", scrollValue, minimumScroll);
 	
 	return (scrollValue <= minimumScroll);
 }
