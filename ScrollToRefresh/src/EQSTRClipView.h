@@ -26,4 +26,5 @@
 #import <AppKit/AppKit.h>
 
 @interface EQSTRClipView : NSClipView
+@property (nonatomic) BOOL isScrolling;
 @end

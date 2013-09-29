@@ -36,9 +36,8 @@
 - (BOOL)overRefreshView;
 - (void)createHeaderView;
 - (void)viewBoundsChanged:(NSNotification*)note;
-
 - (CGFloat)minimumScroll;
-
+- (EQSTRClipView *)contentView;
 @end
 
 @implementation EQSTRScrollView
@@ -92,10 +91,12 @@
 	[self createHeaderView];
 }
 
-- (NSClipView *)contentView {
-	NSClipView *superClipView = [super contentView];
-	if (![superClipView isKindOfClass:[EQSTRClipView class]]) {
-		
+- (EQSTRClipView *)contentView
+{
+	EQSTRClipView *superClipView = (id) [super contentView];
+	
+	if (![superClipView isKindOfClass:[EQSTRClipView class]])
+	{
 		// create new clipview
 		NSView *documentView     = superClipView.documentView;
 		
@@ -111,8 +112,7 @@
 		[self setContentView:clipView];
 		[clipView release];
 		
-		superClipView            = [super contentView];
-		
+		superClipView            = (id) [super contentView];
 	}
 	return superClipView;
 }
@@ -204,14 +204,32 @@
 
 #pragma mark - Detecting Scroll
 
-- (void)scrollWheel:(NSEvent *)event {
-	if (event.phase == NSEventPhaseEnded) {
-		if (self.enablesPullToRefresh &&
-			self._overRefreshView &&
-			!self.isRefreshing)
+- (void)scrollWheel:(NSEvent *)event
+{
+	switch (event.phase)
+	{
+		case NSEventPhaseBegan:
+		case NSEventPhaseChanged:
 		{
-			[self startLoading];
+			self.contentView.isScrolling = YES;
+			break;
 		}
+			
+		case NSEventPhaseEnded:
+		{
+			self.contentView.isScrolling = NO;
+			
+			if (self.enablesPullToRefresh &&
+				self._overRefreshView &&
+				!self.isRefreshing)
+			{
+				[self startLoading];
+			}
+			break;
+		}
+			
+		default:
+			break;
 	}
 	
 	[super scrollWheel:event];

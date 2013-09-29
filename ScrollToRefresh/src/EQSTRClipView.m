@@ -37,6 +37,29 @@
 @end
 
 @implementation EQSTRClipView
+
+- (void)scrollToPoint:(NSPoint)newOrigin
+{
+	NSPoint originalOrigin = newOrigin;
+	
+	if (self.isScrolling && newOrigin.y < 0)
+	{
+		CGFloat targetScroll = fabs(self.minimumScroll);
+		
+		CGFloat additionalPull =
+		exp(-(fabs(newOrigin.y) / 10 - log(targetScroll * 0.75))) -
+		targetScroll * 0.75;
+		
+		newOrigin.y += round(additionalPull);
+		
+		DDLogInfo(@"scrollToPoint: %@ (original: %@)",
+				  NSStringFromPoint(newOrigin),
+				  NSStringFromPoint(originalOrigin));
+	}
+			
+	[super scrollToPoint:newOrigin];
+}
+
 - (NSPoint)constrainScrollPoint:(NSPoint)proposedNewOrigin { // this method determines the "elastic" of the scroll view or how high it can scroll without resistence. 	
 	NSPoint constrained = [super constrainScrollPoint:proposedNewOrigin];
 	CGFloat scrollValue = proposedNewOrigin.y; // this is the y value where the top of the document view is
