@@ -40,8 +40,6 @@
 
 - (void)scrollToPoint:(NSPoint)newOrigin
 {
-	NSPoint originalOrigin = newOrigin;
-	
 	if (self.isScrolling && newOrigin.y < 0)
 	{
 		CGFloat targetScroll = fabs(self.minimumScroll);
@@ -51,10 +49,6 @@
 		targetScroll * 0.75;
 		
 		newOrigin.y += round(additionalPull);
-		
-		DDLogInfo(@"scrollToPoint: %@ (original: %@)",
-				  NSStringFromPoint(newOrigin),
-				  NSStringFromPoint(originalOrigin));
 	}
 			
 	[super scrollToPoint:newOrigin];
