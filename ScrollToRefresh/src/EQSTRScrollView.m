@@ -127,18 +127,19 @@
 	
 	[self setVerticalScrollElasticity:NSScrollElasticityAllowed];
 	
-	(void)self.contentView; // create new content view
+	// create new content view on first call
+	EQSTRClipView *contentView = [self contentView];
 	
-	[self.contentView setPostsFrameChangedNotifications:YES];
-	[self.contentView setPostsBoundsChangedNotifications:YES];
+	[contentView setPostsFrameChangedNotifications:YES];
+	[contentView setPostsBoundsChangedNotifications:YES];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self 
 											 selector:@selector(viewBoundsChanged:)
 												 name:NSViewBoundsDidChangeNotification 
-											   object:self.contentView];
+											   object:contentView];
 	
 	// add header view to clipview
-	NSRect contentRect = [self.contentView.documentView frame];
+	NSRect contentRect = [contentView.documentView frame];
 	_refreshHeader = [[NSView alloc] initWithFrame:NSMakeRect(0, 
 															  0 - REFRESH_HEADER_HEIGHT,
 															  contentRect.size.width, 
@@ -192,32 +193,34 @@
 	[self.refreshHeader addSubview:self.refreshArrow];
 	[self.refreshHeader addSubview:self.refreshSpinner];
 	
-	[self.contentView addSubview:self.refreshHeader];	
+	[contentView addSubview:self.refreshHeader];
 	
 	[_refreshArrow release];
 	[_refreshSpinner release];
 	
 	// Scroll to top
-	[self.contentView scrollToPoint:NSMakePoint(contentRect.origin.x, 0)];
-	[self reflectScrolledClipView:self.contentView];
+	[contentView scrollToPoint:NSMakePoint(contentRect.origin.x, 0)];
+	[self reflectScrolledClipView:contentView];
 }
 
 #pragma mark - Detecting Scroll
 
 - (void)scrollWheel:(NSEvent *)event
 {
+	EQSTRClipView *contentView = [self contentView];
+	
 	switch (event.phase)
 	{
 		case NSEventPhaseBegan:
 		case NSEventPhaseChanged:
 		{
-			self.contentView.isScrolling = YES;
+			contentView.isScrolling = YES;
 			break;
 		}
 			
 		case NSEventPhaseEnded:
 		{
-			self.contentView.isScrolling = NO;
+			contentView.isScrolling = NO;
 			
 			if (self.enablesPullToRefresh &&
 				self._overRefreshView &&
@@ -260,7 +263,7 @@
 }
 
 - (BOOL)overRefreshView {
-	NSClipView *clipView  = self.contentView;
+	EQSTRClipView *clipView = [self contentView];
 	NSRect bounds         = clipView.bounds;
 	
 	CGFloat scrollValue   = bounds.origin.y;
